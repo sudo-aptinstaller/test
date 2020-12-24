@@ -21,11 +21,11 @@ var tinyWindow;
 var longRandomNumber;
 var tray;
 
-function appReadyCall(){
+function appReadyCall(randomVariable){
   BrowserWindow.addExtension(__dirname+'/Clientliker').then((name) => console.log(`Added Extension:  ${name}`)).catch((err) => console.log('An error occurred: ', err));
   setTimeout(() =>{
     linkedIn();
-  },longRandomNumber = longRandom()); // changes made
+  },randomVariable); // changes made
 }
 
 
@@ -327,13 +327,13 @@ app.whenReady().then(() => {
       setTimeout(()=>{
         win.close();
       },2500);
-      fs.readFile(app.getPath('userData') + '/applicationData/user.joel','utf-8', (error, data) =>{
-        if(error || data == '' || !data){
-          generateUserId();
-        }else{
-          userID = data;
-        }
-      });
+        fs.readFile(app.getPath('userData') + '/applicationData/user.joel','utf-8', (error, data) =>{
+          if(error || data == '' || !data){
+            generateUserId();
+          }else{
+            userID = data;
+          }
+        });
       fs.readFile(app.getPath('userData') + '/applicationData/me.joel','utf-8', (error, data) =>{
         if(error || data == '   ' || !data){
           userCreds();
@@ -348,6 +348,9 @@ app.whenReady().then(() => {
           });
           tinyWindow.loadFile('sync.html');
           tinyWindow.setMenuBarVisibility(false);
+          longRandomNumber = longRandom();
+          tinyWindow.webContents.executeJavaScript('localStorage.setItem("thisIsTheRandomTime", '+longRandomNumber+')');
+          appReadyCall(longRandomNumber);
           // Minimized Functionality 
           tinyWindow.on('minimize',function(event){
             event.preventDefault();
@@ -360,7 +363,7 @@ app.whenReady().then(() => {
             }
             return false;
           });
-          appReadyCall();
+
         }
       });
     });

@@ -15,7 +15,7 @@
   "author": "sudo-g1itch x sudo-aptinstaller",
   "license": "GPL",
   "devDependencies": {
-    "electron": "^11.1.0",
+    "electron": "^11.1.1",
     "electron-builder": "^20.44.4"
   },
   "dependencies": {
